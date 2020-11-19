@@ -1,0 +1,444 @@
+<html>
+
+<body>
+<h1>Message Board API</h1>
+
+<h2>Existing Functionality</h2>
+<h3>1 - GET /api/messages</h3>
+Returns all the messages from the database<br>
+
+<form class="f1">
+	  <input type="submit" value="Get Messages">
+</form>
+<div class="f1r"></div>
+
+<h3>2- POST /api/messages</h3>
+with: {uname:"USERNAME", msg:"A MESSAGE"} as request body<br>
+Adds a new message to the database using the username (uname) and message(msg) from the request body, and using a timestamp provided by SQLite. </p>
+
+<form class="f2">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f2a"><br>
+    <label for="uname">Password:</label>
+    <input type="text" id="msg" name="msg" class="f2b"><br>
+		<input type="submit" value="Post Messages">
+</form>
+
+<h3>3 - GET /api/users/:user/messages</h3>
+with <em>user</em> specified as a parameter of the request<br>
+Returns all the messages from the database posted by a specified user.<br>
+
+<form class="f3">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f3a"><br>
+		<input type="submit" value="Get Messages By User">
+</form>
+<div class="f3r"></div>
+
+<h3>4 - POST /api/admin/scrap</h3>
+with {apassword:”password”} as request body<br>
+Scraps database and generates new Database, provided the correct password is provided. Otherwise , it does nothing.<br>
+
+<form class="f4">
+    <label for="apassword">Admin Password:</label>
+    <input type="text" id="apassword" name="apassword" class="f4a"><br>
+		<input type="submit" value="Dump with Password">
+</form>
+
+<div class="f4r"></div>
+
+<h2>Pass Criteria</h2>
+
+<h3>5 - GET /api/messages/:id</h3>
+with id specified as a parameter of the request<br>
+Retrieves a specific message by ID. Note that the way IDs are handled by Firebase and SQLite is slightly different in these particular implementations.<br>
+
+<form class="f5">
+    <label for="messageId">MessageId:</label>
+    <input type="text" id="messageId" name="messageId" class="f5a"><br>
+		<input type="submit" value="Get Message By Id">
+</form>
+
+<div class="f5r"></div>
+
+<h3>6- PATCH /api/messages/:id</h3>
+with id specified as a parameter of the request<br>
+with: {msg:"NEW MESSAGE"} specified as the request body<br>
+Updates message with the message specified (msg), and adds or updates the last updated field.<br>
+
+<form class="f6">
+    <label for="messageId">MessageId:</label>
+    <input type="text" id="messageId" name="messageId" class="f6a"><br>
+    <label for="msg">Message:</label>
+    <input type="text" id="msg" name="msg" class="f6b"><br>
+		<input type="submit" value="Patch Message">
+</form>
+
+<h3>7 - DELETE /api/messages/:id</h3>
+with id specified as a parameter of the request<br>
+Deletes the message with the specified message ID.<br>
+
+<form class="f7">
+    <label for="messageId">MessageId:</label>
+    <input type="text" id="messageId" name="messageId" class="f7a"><br>
+		<input type="submit" value="Delete Message">
+</form>
+
+<h3>8 - GET /api/users/</h3>
+Returns all users and the last time they posted, and profile if they created one.<br>
+
+<form class="f8">
+		<input type="submit" value="Get Users">
+</form>
+<div class="f8r"></div>
+
+
+<h3>9 - POST /api/users/create</h3>
+with {uname:"USERNAME", *profile:"PROFILE"} as request body<br>
+Creates a new user and assigns the new user a key. Profile is optional.<br>
+<form class="f9">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f9a"><br>
+    <label for="profile">Profile:</label>
+    <input type="text" id="profile" name="profile" class="f9b"><br>
+		<input type="submit" value="Create New User">
+</form>
+
+<div class="f9r"></div>
+
+<h3>10 - PUT /api/users/:user/setProfile</h3>
+with userId specified as a parameter of the request<br>
+with {profile:"PROFILE"} as request body.<br>
+Update the profile with the specified profile text for the specified user.
+
+<form class="f10">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f10a"><br>
+    <label for="profile">Profile:</label>
+    <input type="text" id="profile" name="profile" class="f10b"><br>
+		<input type="submit" value="Set Profile">
+</form>
+<div class="f10r"></div>
+
+<h2>Merit Criteria</h2>
+
+<h3>11 - GET /api/messages/:id</h3>
+with id specified as a parameter of the request
+Retrieves the specific message by ID, along with the user, user profile and last updated time. Note that the way IDs are handled by Firebase and SQLite is slightly different in these particular implementations.
+
+<form class="f11">
+    <label for="messageId">MessageId:</label>
+    <input type="text" id="messageId" name="messageId" class="f11a"><br>
+		<input type="submit" value="Get Message By Id">
+</form>
+<div class="f11r"></div>
+
+<h3>12 - POST /api/messages</h3>
+with: {uname:"USERNAME", msg:"A MESSAGE", pwd:"PASSWORD"} as request body
+<br>
+Adds a new message to the database using the username (uname) and message(msg), and password from the request body, and using a timestamp either provided by the client (SQLITE version) or the server (FIREBASE version). Only works if the password (or password hash) is the same as that featured in the database. This means a user will need to be created or updated before they can post.
+
+
+<form class="f12">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f12a"><br>
+    <label for="pwd">Password:</label>
+    <input type="text" id="pwd" name="pwd" class="f12b"><br>
+    <label for="msg">Message:</label>
+    <input type="text" id="msg" name="msg" class="f12c"><br>
+		<input type="submit" value="Post Messages Pass">
+</form>
+<div class="f12r"></div>
+
+<h3>13 - PATCH /api/messages/:id</h3>
+with id specified as a parameter of the request<br>
+with: {msg:"NEW MESSAGE", uname:"USERNAME", pwd:"PASSWORD"} specified as the request body<br>
+Updates the message with the message specified (msg), and adds a last updated field, provided the username is the same as the username of the original poster and the password (or password hash) is the same as that featured in the database. If this fails, it should return either a JSON message with the error or a relevant HTTP Error Code.
+
+<form class="f13">
+    <label for="messageId">MessageId:</label>
+    <input type="text" id="messageId" name="messageId" class="f13a"><br>
+    <label for="msg">Message:</label>
+    <input type="text" id="msg" name="msg" class="f13b"><br>
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f13c"><br>
+    <label for="pwd">Password:</label>
+    <input type="text" id="pwd" name="pwd" class="f13d"><br>
+		<input type="submit" value="Patch Message">
+</form>
+<div class="f13r"></div>
+
+<h3>14 - DELETE /api/messages/:id</h3>
+with id specified as a parameter of the request<br>
+with { uname:"USERNAME", pwd:"PASSWORD"}  specified as the request body<br>
+Deletes the message with the specified user ID, provided the username is the same as the username of the original poster and the password (or password hash) is the same as that featured in the database. If this fails, it should return either a JSON message with the error or a relevant HTTP Error Code.
+
+
+<form class="f14">
+    <label for="messageId">MessageId:</label>
+    <input type="text" id="messageId" name="messageId" class="f14a"><br>
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f14b"><br>
+    <label for="pwd">Password:</label>
+    <input type="text" id="pwd" name="pwd" class="f14c"><br>
+		<input type="submit" value="Delete Message">
+</form>
+<div class="f14r"></div>
+
+<h3>15 - POST /api/users/create</h3>
+with {uname:"USERNAME", pwd:"PASSWORD",*profile:"PROFILE"} as request body<br>
+Creates a new user with the specified password and assigns the new user a key. Profile is optional.
+
+
+<form class="f15">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f15a"><br>
+    <label for="pwd">Password:</label>
+    <input type="text" id="pwd" name="pwd" class="f15b"><br>
+    <label for="profile">Profile:</label>
+    <input type="text" id="profile" name="profile" class="f15c"><br>
+		<input type="submit" value="Create New User">
+</form>
+<div class="f15r"></div>
+
+<h3>16 - PUT /api/users/:user/setProfile</h3>
+with user specified as a parameter of the request<br>
+with {profile:"PROFILE TEXT", uname:"USERNAME",pwd:"PASSWORD"} as request body.<br>
+Update the profile with the specified profile text for the specified user, provided the username is the same as the username of the original poster and the password (or password hash) is the same as that featured in the database. If this fails, it should return either a JSON message with the error or a relevant HTTP Error Code.
+
+<form class="f16">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname" class="f16a"><br>
+    <label for="pwd">Password:</label>
+    <input type="text" id="pwd" name="pwd" class="f16b"><br>
+    <label for="profile">Profile:</label>
+    <input type="text" id="profile" name="profile" class="f16c"><br>
+		<input type="submit" value="Set Profile">
+</form>
+<div class="f16r"></div>
+
+<h3>Distinction Criteria</h3>
+<h3>17 - POST /api/admin/create</h3>
+with {target:"USERNAME" , uname:"USERNAME",pwd:"PASSWORD"} as request body.<br>
+Provided a correct username (uname) and password (pwd) is provided for a user who is already an administrator, and the target is a valid user, register that user as an admin and return an affirmative message or HTTP response code. If it fails, return an appropriate error message or code.
+<h3>18 - POST /api/admin/scrap</h3>
+with {uname:"USERNAME",pwd:"PASSWORD"} as request body<br>
+Given a correct username and password is provided for a user who has admin access, scrap the database and rebuild it. If this fails, return an appropriate error message or code.
+
+<h3>19 - PATCH /api/messages/:id</h3>
+<h3>20 - DELETE /api/messages/:</h3>
+<h3>21 - PUT /api/users/:userId/setProfile</h3>
+The previous functions should be callable by someone providing a user and password with admin credentials regardless of whether they were the originator of the message.
+
+<script>
+const f1 = document.querySelector('.f1');
+f1.addEventListener('submit', event => {
+event.preventDefault();
+ fetch(`/api/messages`,
+    { method: "get" })
+.then((res)=>res.json()).then(res=>document.querySelector('.f1r').innerText=JSON.stringify(res))});
+
+const f2 = document.querySelector('.f2');
+f2.addEventListener('submit', event => {
+event.preventDefault();
+let body = {uname:document.querySelector('.f2a').value,
+msg:document.querySelector('.f2b').value }
+ fetch("/api/messages",
+    {
+        headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(body),
+        method: "post"
+    })
+.then((res)=>res.json()).then(res=>document.querySelector('.f2r').innerText=JSON.stringify(res))
+});
+
+const f3 = document.querySelector('.f3');
+f3.addEventListener('submit', event => {
+event.preventDefault();
+let uname = document.querySelector('.f3a').value
+ fetch(`/api/users/${uname}/messages`,
+    { method: "get" })
+.then((res)=>res.json()).then(res=>document.querySelector('.f3r').innerText=JSON.stringify(res))});
+
+const f4 = document.querySelector('.f4');
+f4.addEventListener('submit', event => {
+event.preventDefault();
+let f4body = {apassword:document.querySelector('.f4a').value }
+ fetch(`/api/admin/scrap`,
+       {
+        headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(f4body),
+        method: "post"
+    })
+.then((res)=>res.json()).then(res=>document.querySelector('.f4r').innerText=JSON.stringify(res))});
+
+const f5 = document.querySelector('.f5');
+f5.addEventListener('submit', event => {
+event.preventDefault();
+let f5messageId = document.querySelector('.f5a').value
+ fetch(`/api/messages/${f5messageId}`,
+      { method: "get" })
+      .then((res)=>res.json()).then(res=>document.querySelector('.f5r').innerText=JSON.stringify(res))});
+
+const f6 = document.querySelector('.f6');
+f6.addEventListener('submit', event => {
+event.preventDefault();
+let f6messageId = document.querySelector('.f6a').value
+let f6body = {msg:document.querySelector('.f6b').value}
+ fetch(`/api/messages/${f6messageId}`,
+      { headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(body),
+        method: "patch"})
+.then((res)=>res.json()).then(res=>document.querySelector('.f6r').innerText=JSON.stringify(res))});
+
+
+const f7 = document.querySelector('.f7');
+f7.addEventListener('submit', event => {
+event.preventDefault();
+let f7messageId = document.querySelector('.f7a').value
+ fetch(`/api/messages/${f7messageId}`,
+        {method: "delete"}).then((res)=>res.json()).then(res=>document.querySelector('.f7r').innerText=JSON.stringify(res))});
+
+const f8 = document.querySelector('.f8');
+f8.addEventListener('submit', event => {
+event.preventDefault();
+ fetch(`/api/users`,
+    { method: "get" })
+.then((res)=>res.json())
+.then(res=>document.querySelector('.f8r').innerText=JSON.stringify(res))
+
+});
+
+
+const f9 = document.querySelector('.f9');
+f9.addEventListener('submit', event => {
+event.preventDefault();
+let f9body = {uname:document.querySelector('.f9a').value,
+profile:document.querySelector('.f9b').value }
+
+fetch("/api/users/create",
+    {
+        headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(f9body),
+        method: "post"
+    })
+.then((res)=>res.json()).then(res=>document.querySelector('.f9r').innerText=JSON.stringify(res))
+});
+
+const f10 = document.querySelector('.f10');
+f10.addEventListener('submit', event => {
+event.preventDefault();
+let f10body = {uname:document.querySelector('.f10a').value,
+profile:document.querySelector('.f10b').value }
+ fetch(`/api/users/${f10body.uname}/setProfile`,
+    {
+        headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(f10body),
+        method: "put"
+    })
+.then((res)=>res.json()).then(res=>document.querySelector('.f10r').innerText=JSON.stringify(res))
+});
+
+const f11 = document.querySelector('.f11');
+f11.addEventListener('submit', event => {
+event.preventDefault();
+let f11messageId = document.querySelector('.f11a').value
+ fetch(`/api/messages/${f11messageId}`,
+      { method: "get" })
+      .then((res)=>res.json()).then(res=>document.querySelector('.f11r').innerText=JSON.stringify(res))});
+
+
+const f12 = document.querySelector('.f12');
+f12.addEventListener('submit', event => {
+event.preventDefault();
+let body = {uname:document.querySelector('.f12a').value,
+pwd:document.querySelector('.f12b').value,
+msg:document.querySelector('.f12c').value }
+ fetch("/api/messages",
+    {
+        headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(body),
+        method: "post"
+    })
+.then((res)=>res.json()).then(res=>document.querySelector('.f12r').innerText=JSON.stringify(res))
+});
+
+const f13 = document.querySelector('.f13');
+f13.addEventListener('submit', event => {
+event.preventDefault();
+let f13messageId = document.querySelector('.f13a').value
+let f13body = {msg:document.querySelector('.f13b').value,
+uname:document.querySelector('.f13c').value,
+pwd:document.querySelector('.f13d').value}
+ fetch(`/api/messages/${f13messageId}`,
+      { headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(f13body),
+        method: "patch"})
+.then((res)=>res.json()).then(res=>document.querySelector('.f13r').innerText=JSON.stringify(res))});
+
+
+const f14 = document.querySelector('.f14');
+f14.addEventListener('submit', event => {
+event.preventDefault();
+let f14messageId = document.querySelector('.f14a').value
+let f14body = {uname:document.querySelector('.f14b').value,
+pwd:document.querySelector('.f14c').value}
+ fetch(`/api/messages/${f14messageId}`,{ headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(f14body),
+        method: "delete"}).then((res)=>res.json()).then(res=>document.querySelector('.f14r').innerText=JSON.stringify(res))});
+
+const f15 = document.querySelector('.f15');
+f15.addEventListener('submit', event => {
+event.preventDefault();
+let f15body = {uname:document.querySelector('.f15a').value,
+pwd:document.querySelector('.f15b').value,
+profile:document.querySelector('.f15c').value}
+ fetch(`/api/users/create`,{ headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(f15body),
+        method: "post"}).then((res)=>res.json()).then(res=>document.querySelector('.f15r').innerText=JSON.stringify(res))});
+
+const f16 = document.querySelector('.f16');
+f16.addEventListener('submit', event => {
+event.preventDefault();
+let f16username = document.querySelector('.f16a').value
+let f16body = {
+pwd:document.querySelector('.f16b').value,
+profile:document.querySelector('.f16c').value}
+ fetch(`/api/users/${f16username}/setProfile`,{ headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+        body: JSON.stringify(f16body),
+        method: "put"}).then((res)=>res.json()).then(res=>document.querySelector('.f16r').innerText=JSON.stringify(res))});
+
+</script>
+
+</body>
+</html>
